@@ -27,7 +27,7 @@ public class SimpleSSLMail {
     private static final String SMTP_HOST_NAME = "smtp.gmail.com";
     private static final int SMTP_HOST_PORT = 465;
     private String SMTP_AUTH_USER = "PinkBunnyChickenMarsala@gmail.com";
-    private String SMTP_AUTH_PWD  = "bomqqlsoifthxwuq";
+    private String SMTP_AUTH_PWD  = "pbcmcs381";
     
 	public static void main(String[] args) throws Exception{
        //new SimpleSSLMail().send();
