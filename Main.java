@@ -8,7 +8,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception{
 		@SuppressWarnings("unused")
-		Controller x = new Controller(new GUI());
+		GUIController x = new GUIController(new GUI());
 		YubicoClient yc = YubicoClient.getClient(33275, "vkRgHwGDA5tMuoe8Jj+SgL36ISQ=");
 		
 		String otp = "ccccccgdrrkkrnkhlenjnivncfllulbunddlkjlueujf";
@@ -19,6 +19,7 @@ public class Main {
 		} else {
 			System.out.println("\n* Failed to verify OTP");
 		}
+		
 	}
 
 }
