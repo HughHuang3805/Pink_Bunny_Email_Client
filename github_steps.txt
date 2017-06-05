@@ -1,0 +1,23 @@
+1. Clone the repository
+git clone [name_of_the_repository]
+
+2. Create a branch off of the master branch
+git checkout -b [name_of_your_new_branch]
+
+3. Work on the project in your branch
+
+4. Once finished your project in your branch and ready to push ...
+
+5. First add a remote for your branch:
+git remote add [name_of_your_remote] [url_of_your_remote]
+
+6. Push the changes to your branch
+git add --all :/
+git commit -m "your message"
+git push [name_of_your_new_remote] [name_of_your_branch]
+
+7. Once done pushing to your branch, merge to master for last step
+git checkout master
+git pull origin master
+git merge test
+git push origin master
