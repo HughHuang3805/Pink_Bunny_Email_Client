@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry exported="true" kind="lib" path="I:/Download/javax.mail-1.5.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="I:/Download/OpenPgp-BounceCastle-Example-master/OpenPgp-BounceCastle-Example-master/lib/bcpg-jdk15on-150.jar"/>
+	<classpathentry exported="true" kind="lib" path="I:/Download/OpenPgp-BounceCastle-Example-master/OpenPgp-BounceCastle-Example-master/lib/bcprov-jdk15on-150.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="I:/Download/yubico-validation-client2-3.0.1.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/yubico-validation-client2"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
