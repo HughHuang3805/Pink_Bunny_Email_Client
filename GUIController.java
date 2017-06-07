@@ -24,7 +24,6 @@ public class GUIController implements ActionListener{
 	GUI myGui;
 	Scanner initialScannerForInputFile; //scanner of input file from initial command line argument
 	SSLMailServer mailServer = new SSLMailServer();
-	YubicoClient yubicoClient;
 
 	public GUIController(GUI g) throws Exception{//constructor for no command line arguments
 		myGui = g;
@@ -44,40 +43,25 @@ public class GUIController implements ActionListener{
 		switch(buttonName){
 
 		case "Sign-in":
-			boolean authenticated, otpAuthenticated = false;
+			boolean emailAuthenticated = false, otpAuthenticated = false, yubikeyAuthenticated = false;
 			mailServer.setSMTP_AUTH_USER(myGui.getEmail());
 			mailServer.setSMTP_AUTH_PWD(myGui.getPassword());
-			
-			//yubikey verification should be moved to the server instead of on the client side for security purpose (id and key)
-			yubicoClient = YubicoClient.getClient(33275, "vkRgHwGDA5tMuoe8Jj+SgL36ISQ=");
-
 			mailServer.setMyGui(myGui);
-			authenticated = mailServer.connect();
-
+			emailAuthenticated = mailServer.connect();//first check to see if it is a correct email/password combo
+			
 			try {//otp verification
-				if(authenticated){//if the password and username are correct
-					VerificationResponse response = yubicoClient.verify(myGui.getYubikey());//verify the yubikey with api key credentials
-					if(response!=null && response.getStatus() == ResponseStatus.OK) {
-						//successful
-						JOptionPane.showMessageDialog(myGui, "Successfully verified OTP(One-Time-Password)", "Succeed", JOptionPane.INFORMATION_MESSAGE);
-						otpAuthenticated = true;
-					} else {
-						//not successful
-						JOptionPane.showMessageDialog(myGui, "Failed to verify OTP(One-Time-Password)", "Failed", JOptionPane.ERROR_MESSAGE);
-						otpAuthenticated = false;
-					}
+				if(emailAuthenticated){//if the password and username are correct
+					yubikeyAuthenticated = Authentication.verifyYubikey(myGui, myGui.getEmail(), myGui.getYubikey());
+					if(!yubikeyAuthenticated)//if yubikey is not authenticated against database, no need to check otp
+						JOptionPane.showMessageDialog(myGui, "Not a valid YubiKey.", "Error", JOptionPane.ERROR_MESSAGE);
+					else
+						otpAuthenticated = Authentication.verifyOTP(myGui, myGui.getYubikey());
 				}
-			} catch (YubicoVerificationException e3) {
-				// TODO Auto-generated catch block
-				e3.printStackTrace();
-			} catch (YubicoValidationFailure e3) {
-				// TODO Auto-generated catch block
-				e3.printStackTrace();
 			} catch (IllegalArgumentException iae){
 				JOptionPane.showMessageDialog(myGui, "Not a valid OTP(One-Time-Password) format.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 
-			if(authenticated && otpAuthenticated){//if everything is correct, then show messages and functionalities
+			if(emailAuthenticated && otpAuthenticated && yubikeyAuthenticated){//if everything is correct, then show messages and functionalities
 				myGui.loginPanel.setVisible(false);
 				myGui.setEmailBodyTextArea();
 				myGui.menu1.setEnabled(true);
