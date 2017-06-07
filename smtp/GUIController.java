@@ -62,7 +62,7 @@ public class GUIController implements ActionListener{
 					//this line is used to process verificationString
 					while(verificationString.isEmpty()){
 						try {
-							emailClient = new Socket("192.168.0.137", 465);
+							emailClient = new Socket("192.168.0.137", 5000);
 							out = new PrintWriter(emailClient.getOutputStream(), true);
 							in = new BufferedReader(new InputStreamReader(emailClient.getInputStream()));
 							verificationString = EmailClient.verifyYubikey(myGui.getEmail(), myGui.getYubikey(), out, in);

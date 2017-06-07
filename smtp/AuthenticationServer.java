@@ -1,6 +1,7 @@
 package smtps;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -12,13 +13,15 @@ public class AuthenticationServer {
 	public static void main(String[] args){
 
 
-		int portNumber = 465;
+		int portNumber = 5000;
 		boolean listening = true;
-		try (ServerSocket serverSocket = new ServerSocket(portNumber)) { 
+		try (ServerSocket serverSocket = new ServerSocket(portNumber, 2, InetAddress.getByName("192.168.0.137"))) { 
 			Database.getConnection();
+			System.out.println(serverSocket.getInetAddress());
 			while (listening) {
 				new ServerThread(serverSocket.accept()).start();
 			}
+			
 		} catch (IOException e) {
 			System.err.println("Could not listen on port " + portNumber);
 			System.exit(-1);
