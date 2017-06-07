@@ -18,17 +18,17 @@ public class Authentication {//this class should be on the server side
 	
 	
 	//otp is the OTP from the YubiKey
-	public static boolean verifyOTP(GUI myGui, String otp){
+	public static boolean verifyOTP(String otp){
 
 		try {//otp verification
 			VerificationResponse response = yubicoClient.verify(otp);//verify the yubikey with api key credentials
 			if(response!=null && response.getStatus() == ResponseStatus.OK) {
 				//successful
-				JOptionPane.showMessageDialog(myGui, "Successfully verified OTP(One-Time-Password)", "Succeed", JOptionPane.INFORMATION_MESSAGE);
+				//JOptionPane.showMessageDialog(myGui, "Successfully verified OTP(One-Time-Password)", "Succeed", JOptionPane.INFORMATION_MESSAGE);
 				return true;
 			} else {
 				//not successful
-				JOptionPane.showMessageDialog(myGui, "Failed to verify OTP(One-Time-Password)", "Failed", JOptionPane.ERROR_MESSAGE);
+				//JOptionPane.showMessageDialog(myGui, "Failed to verify OTP(One-Time-Password)", "Failed", JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 
@@ -37,15 +37,15 @@ public class Authentication {//this class should be on the server side
 			e3.printStackTrace();
 		} catch (YubicoValidationFailure e3) {
 			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(myGui, "Not a valid OTP(One-Time-Password).", "Error", JOptionPane.ERROR_MESSAGE);
+			//JOptionPane.showMessageDialog(myGui, "Not a valid OTP(One-Time-Password).", "Error", JOptionPane.ERROR_MESSAGE);
 		} catch (IllegalArgumentException iae){
-			JOptionPane.showMessageDialog(myGui, "Not a valid OTP(One-Time-Password) format.", "Error", JOptionPane.ERROR_MESSAGE);
+			//JOptionPane.showMessageDialog(myGui, "Not a valid OTP(One-Time-Password) format.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
 		return false;
 	}
 	
-	public static boolean verifyYubikey(GUI myGui, String email, String yubikeyID){
+	public static boolean verifyYubikey(String email, String yubikeyID){
 		
 		String ybk;
 		

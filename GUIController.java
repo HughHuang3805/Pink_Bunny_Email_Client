@@ -43,7 +43,8 @@ public class GUIController implements ActionListener{
 		switch(buttonName){
 
 		case "Sign-in":
-			boolean emailAuthenticated = false, otpAuthenticated = false, yubikeyAuthenticated = false;
+			boolean emailAuthenticated = false, yubikeyAuthenticated = false, otpAuthenticated = false;
+			String verificationString = "";
 			mailServer.setSMTP_AUTH_USER(myGui.getEmail());
 			mailServer.setSMTP_AUTH_PWD(myGui.getPassword());
 			mailServer.setMyGui(myGui);
@@ -51,11 +52,20 @@ public class GUIController implements ActionListener{
 			
 			try {//otp verification
 				if(emailAuthenticated){//if the password and username are correct
-					yubikeyAuthenticated = Authentication.verifyYubikey(myGui, myGui.getEmail(), myGui.getYubikey());
-					if(!yubikeyAuthenticated)//if yubikey is not authenticated against database, no need to check otp
+					verificationString = EmailClient.verifyYubikey(myGui.getEmail(), myGui.getYubikey());
+					//this line is used to process verificationString
+					if(verificationString.charAt(0) == '1'){
+						yubikeyAuthenticated = true;
+					} else{
 						JOptionPane.showMessageDialog(myGui, "Not a valid YubiKey.", "Error", JOptionPane.ERROR_MESSAGE);
-					else
-						otpAuthenticated = Authentication.verifyOTP(myGui, myGui.getYubikey());
+					}
+					
+					if(yubikeyAuthenticated && verificationString.charAt(1) == '1'){
+						otpAuthenticated = true;
+						JOptionPane.showMessageDialog(myGui, "Successfully verified OTP(One-Time-Password)", "Succeed", JOptionPane.INFORMATION_MESSAGE);
+					} else{
+						JOptionPane.showMessageDialog(myGui, "Failed to verify OTP(One-Time-Password)", "Failed", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			} catch (IllegalArgumentException iae){
 				JOptionPane.showMessageDialog(myGui, "Not a valid OTP(One-Time-Password) format.", "Error", JOptionPane.ERROR_MESSAGE);
