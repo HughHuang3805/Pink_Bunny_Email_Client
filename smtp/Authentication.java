@@ -24,11 +24,9 @@ public class Authentication {//this class should be on the server side
 			VerificationResponse response = yubicoClient.verify(otp);//verify the yubikey with api key credentials
 			if(response!=null && response.getStatus() == ResponseStatus.OK) {
 				//successful
-				//JOptionPane.showMessageDialog(myGui, "Successfully verified OTP(One-Time-Password)", "Succeed", JOptionPane.INFORMATION_MESSAGE);
 				return true;
 			} else {
 				//not successful
-				//JOptionPane.showMessageDialog(myGui, "Failed to verify OTP(One-Time-Password)", "Failed", JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 
@@ -37,9 +35,9 @@ public class Authentication {//this class should be on the server side
 			e3.printStackTrace();
 		} catch (YubicoValidationFailure e3) {
 			// TODO Auto-generated catch block
-			//JOptionPane.showMessageDialog(myGui, "Not a valid OTP(One-Time-Password).", "Error", JOptionPane.ERROR_MESSAGE);
+			e3.printStackTrace();
 		} catch (IllegalArgumentException iae){
-			//JOptionPane.showMessageDialog(myGui, "Not a valid OTP(One-Time-Password) format.", "Error", JOptionPane.ERROR_MESSAGE);
+			iae.printStackTrace();
 		}
 		
 		return false;

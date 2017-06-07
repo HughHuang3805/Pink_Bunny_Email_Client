@@ -17,9 +17,9 @@ public class EmailClient {
 		try
 		{
 			GUIController x = new GUIController(new GUI());
-			Socket emailClient =  new Socket("192.168.0.137", 465);
+			/*Socket emailClient =  new Socket("192.168.0.137", 465);
 			out = new PrintWriter(emailClient.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(emailClient.getInputStream()));
+			in = new BufferedReader(new InputStreamReader(emailClient.getInputStream()));*/
 		}
 		catch (UnknownHostException e)
 		{
@@ -33,7 +33,7 @@ public class EmailClient {
 		}
 	}
 
-	public static String verifyYubikey(String email, String yubikey){
+	public static String verifyYubikey(String email, String yubikey, PrintWriter out, BufferedReader in){
 		
 		String response = "";
 		try {

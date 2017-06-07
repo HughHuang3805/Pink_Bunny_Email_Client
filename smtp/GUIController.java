@@ -8,6 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
@@ -49,17 +52,37 @@ public class GUIController implements ActionListener{
 			mailServer.setSMTP_AUTH_PWD(myGui.getPassword());
 			mailServer.setMyGui(myGui);
 			emailAuthenticated = mailServer.connect();//first check to see if it is a correct email/password combo
-			
+
 			try {//otp verification
 				if(emailAuthenticated){//if the password and username are correct
-					verificationString = EmailClient.verifyYubikey(myGui.getEmail(), myGui.getYubikey());
+					Socket emailClient;
+					PrintWriter out;
+					BufferedReader in;
+					int counter = 0;
 					//this line is used to process verificationString
+					while(verificationString.isEmpty()){
+						try {
+							emailClient = new Socket("192.168.0.137", 465);
+							out = new PrintWriter(emailClient.getOutputStream(), true);
+							in = new BufferedReader(new InputStreamReader(emailClient.getInputStream()));
+							verificationString = EmailClient.verifyYubikey(myGui.getEmail(), myGui.getYubikey(), out, in);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						counter++;
+						if(counter == 10){
+							JOptionPane.showMessageDialog(myGui, "Error encountered when connecting, please restart program.", "Error", JOptionPane.ERROR_MESSAGE);
+							myGui.dispose();
+							break;
+						}
+					}
 					if(verificationString.charAt(0) == '1'){
 						yubikeyAuthenticated = true;
 					} else{
 						JOptionPane.showMessageDialog(myGui, "Not a valid YubiKey.", "Error", JOptionPane.ERROR_MESSAGE);
 					}
-					
+
 					if(yubikeyAuthenticated && verificationString.charAt(1) == '1'){
 						otpAuthenticated = true;
 						JOptionPane.showMessageDialog(myGui, "Successfully verified OTP(One-Time-Password)", "Succeed", JOptionPane.INFORMATION_MESSAGE);
