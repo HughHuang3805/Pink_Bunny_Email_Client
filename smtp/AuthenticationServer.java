@@ -21,7 +21,7 @@ public class AuthenticationServer {
 			while (listening) {
 				new ServerThread(serverSocket.accept()).start();
 			}
-			
+			System.out.println("Server successfully started.");
 		} catch (IOException e) {
 			System.err.println("Could not listen on port " + portNumber);
 			System.exit(-1);

@@ -10,9 +10,6 @@ import java.util.Scanner;
 
 public class EmailClient {
 
-	static PrintWriter out;//a scanner to receive the answer back from the server
-	static BufferedReader in;
-
 	public static void main(String[] args){
 		try
 		{
