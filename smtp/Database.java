@@ -35,8 +35,8 @@ public class Database {
 		try{
 			/*these properties are set for getConnection(), better :)*/
 			databaseName = "yubikey_email";
-			properties.setProperty("user", "root");
-			properties.setProperty("password", "hxq3362362");
+			properties.setProperty("user", "123");
+			properties.setProperty("password", "123");
 			properties.setProperty("useSSL", "false");
 			properties.setProperty("autoReconnect", "true");
 

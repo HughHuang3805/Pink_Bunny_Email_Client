@@ -15,7 +15,7 @@ public class AuthenticationServer {
 
 		int portNumber = 5000;
 		boolean listening = true;
-		try (ServerSocket serverSocket = new ServerSocket(portNumber, 2, InetAddress.getByName("192.168.0.137"))) { 
+		try (ServerSocket serverSocket = new ServerSocket(portNumber, 2, InetAddress.getByName("127.0.0.1"))) { 
 			Database.getConnection();
 			System.out.println(serverSocket.getInetAddress());
 			while (listening) {

@@ -13,7 +13,7 @@ import com.yubico.client.v2.exceptions.YubicoVerificationException;
 public class Authentication {//this class should be on the server side
 
 	//clientId and secretKey are retrieved from https://upgrade.yubico.com/getapikey
-	private static YubicoClient yubicoClient = YubicoClient.getClient(33275, "vkRgHwGDA5tMuoe8Jj+SgL36ISQ=");
+	private static YubicoClient yubicoClient = YubicoClient.getClient(123, "123");
 	private static Database myDatabase = new Database();
 	
 	
